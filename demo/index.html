@@ -90,6 +90,120 @@
           <product-selector></product-selector>
         </template>
       </bbva-core-demo-case>
+
+      <bbva-core-demo-case heading="Data_Manager" description="Product selector and Data Manager">
+        <template>
+          <bbva-core-demo-dm-helper id="gftFinancialOvervier" without-login="">
+            <div slot="component">
+              <input type="text" placeholder="host">
+              
+              <button>Limpiar</button>
+              <product-selector></product-selector>
+            </div>
+          </bbva-core-demo-dm-helper>
+          
+          <script type="module">
+            const { GftFinancialOverviewService } = window.DemoHelpers;
+            // vamos a probar una clase
+            let defaultHost = 'https://mock-senda-node.herokuapp.com';
+            const inputFromDemo = document.querySelector('input');
+            const productSelector = document.querySelector('bbva-btge-web-product-selector')
+            inputFromDemo.value = defaultHost;
+            inputFromDemo.addEventListener('input', e => {
+              //console.log(e.target.value);
+              defaultHost = e.target.value;
+            })
+
+            const demo = document.querySelector('bbva-core-demo-dm-helper');
+            
+            demo.dmMethods = [
+              {
+                event: 'gft-financial-overview-service',
+                label: 'Gft Financial Overview Service',
+                method: 'getFinancialOverviewService()',
+              },
+              {
+                event: 'gft-financial-overview-service1',
+                label: 'Gft Financial Overview Service1',
+                method: 'getFinancialOverviewService1()',
+              },
+              {
+                event: 'gft-financial-overview-service2',
+                label: 'Gft Financial Overview Service2',
+                method: 'getFinancialOverviewService2()',
+              },
+            ];
+
+            demo.addEventListener('gft-financial-overview-service', () => {
+              console.log('gft-financial-overview-service');
+              demo.loadingData = true;
+              productSelector.loading = true;
+              const instance = new GftFinancialOverviewService({host: defaultHost});
+              instance.metodoPublico().then( response => {
+                console.log(response);
+                demo.loadingData = false;
+                productSelector.loading = false;
+                productSelector.items = [
+                  {
+                    "currency": "MXN",
+                    "products": [
+                      {
+                        "alias": "Cuenta de Nómina",
+                        "balance": 546.26,
+                        "id": "a01",
+                        "printedNumber": "012 180 00011835971 3"
+                      },
+                      {
+                        "alias": "Cuenta Común",
+                        "id": "a02",
+                        "balance": 30589.8,
+                        "printedNumber": "116 180 00031825394 2"
+                      },
+                      {
+                        "alias": "Cuenta Negocio",
+                        "balance": 426215.06,
+                        "id": "a03",
+                        "printedNumber": "012 027 00027364581 7"
+                      },
+                      {
+                        "alias": "Cuenta de Pagos",
+                        "balance": 72855,
+                        "id": "a04",
+                        "printedNumber": "014 180 00042197445 6"
+                      },
+                      {
+                        "alias": "Cuenta de Cheques",
+                        "balance": 13188.38,
+                        "id": "a05",
+                        "printedNumber": "012 544 00053642788 9"
+                      }
+                    ]
+                  }
+                ];
+                demo.jsonData = response;
+              }).catch(error => {
+                  demo.loadingData = false;
+                  demo.jsonData = error;
+                })
+            });
+            demo.addEventListener('gft-financial-overview-service1', () => {
+              console.log('gft-financial-overview-service1');
+              demo.loadingData = true;
+              const instance = new GftFinancialOverviewService({host: defaultHost});
+              instance.metodoPublico2().then( response => {
+                console.log('response', response);
+                demo.loadingData = false;
+                demo.jsonData = response;
+              })
+            });
+            demo.addEventListener('gft-financial-overview-service2', () => {
+              console.log('gft-financial-overview-service2');
+              demo.loadingData = true;
+            });
+          </script>
+
+        </template>
+      </bbva-core-demo-case>
       
       
 

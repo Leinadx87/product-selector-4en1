@@ -16,11 +16,13 @@
     "test:watch": "cells lit-component:test:watch"
   },
   "dependencies": {
-    "@bbva-web-components/bbva-foundations-styles": "^2.3.5",
     "@bbva-web-components/bbva-core-lit-helpers": "^1.0.4",
+    "@bbva-web-components/bbva-foundations-styles": "^2.3.5",
+    "@cells-components/bgadp-financial-overview-v0": "^3.94.0",
     "lit-element": "^2.0.0"
   },
   "devDependencies": {
+    "@bbva-web-components/bbva-core-demo-dm-helper": "^0.1.14",
     "@cells/cells-component-core": "^3.0.0"
   }
 }
